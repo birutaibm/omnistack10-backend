@@ -16,4 +16,26 @@ module.exports = {
       location: Location.create(info.longitude, info.latitude),
     });
   },
+
+  onlyUpdatableFields: newValue => {
+    const allowed = ['name', 'bio', 'techs', 'longitude', 'latitude', 'location'];
+
+    Object.keys(newValue)
+      .filter(key => !allowed.includes(key))
+      .forEach(key => delete newValue[key]);
+
+    if (!newValue.hasOwnProperty('location') &&
+        newValue.hasOwnProperty('longitude') &&
+        newValue.hasOwnProperty('latitude')) {
+      const longitude = newValue.longitude;
+      const latitude = newValue.latitude;
+      
+      newValue.location = Location.create(longitude, latitude);
+    }
+
+    delete newValue.longitude;
+    delete newValue.latitude;
+
+    return newValue;
+  },
 };
