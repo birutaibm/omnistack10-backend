@@ -28,25 +28,17 @@ module.exports = {
 
   destroy: async (request, response) => {
     const {id} = request.params;
-    const dev = await Dev.findByIdAndDelete(id);
+    const dev = await DevServices.delete(id);
 
     return response.json(dev);
   },
 
   update: async (request, response) => {
-    const {id} = request.params;
-    const oldValue = await Dev.findById(id);
-    if (oldValue) {
-      const updatedValues = DevServices.onlyUpdatableFields(request.body);
-      await Dev.update(oldValue, updatedValues);
-
-      return response.json({
-        oldValue,
-        updatedValues,
-        message: 'Success update!'
-      });
-    } else {
-      return response.json({message: 'id '+id+' not found!'});
-    }
+    const result = await DevServices.change({
+      ...request.body,
+      _id: request.params.id,
+    });
+    console.log(result);
+    return response.json(result);
   },
 };
