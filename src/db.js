@@ -1,16 +1,13 @@
+require('dotenv').config({  
+  path: process.env.NODE_ENV === "test" ? ".env.testing" : ".env"
+});
 const mongoose = require('mongoose');
 
-const mongo = {
-  protocol: 'mongodb+srv://',
-  user: 'omnistack',
-  password: 'omnistack',
-  cluster: 'birutaibm-mjbkw.gcp.mongodb.net',
-  db: 'semana10',
-  query: 'retryWrites=true&w=majority',
-};
-mongo.url = mongo.protocol+mongo.user+':'+mongo.password+'@'+mongo.cluster+'/'+mongo.db+'?'+mongo.query;
+const url = process.env.DB_PROTOCOL + '://' +
+    process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_CLUSTER + '/' +
+    process.env.DB_COLLECTION + '?' + process.env.DB_QUERY;
 
-const connect = () => mongoose.connect(mongo.url, {
+const connect = () => mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
