@@ -12,7 +12,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
     "express": "^4.17.2",
-    "mongoose": "^6.0.5",
+    "mongoose": "^6.2.2",
     "socket.io": "^2.4.0"
   },
   "devDependencies": {
